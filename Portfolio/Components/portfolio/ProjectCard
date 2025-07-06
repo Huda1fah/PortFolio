@@ -1,0 +1,59 @@
+import React from 'react';
+import { ExternalLink, Award } from 'lucide-react';
+
+export default function ProjectCard({ project, index }) {
+  const getCategoryColor = (category) => {
+    const colors = {
+      'Research': 'from-blue-500 to-cyan-500',
+      'Engineering': 'from-purple-500 to-pink-500',
+      'Security': 'from-green-500 to-teal-500',
+      'Machine Learning': 'from-orange-500 to-red-500'
+    };
+    return colors[category] || 'from-gray-500 to-gray-600';
+  };
+
+  return (
+    <div 
+      className="project-card group relative h-full flex flex-col bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 ease-out hover:-translate-y-2 border border-gray-100 overflow-hidden"
+    >
+      <div className={`absolute inset-0 bg-gradient-to-r ${getCategoryColor(project.category)} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
+      
+      <div className="relative z-10 flex items-center justify-between mb-4">
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white bg-gradient-to-r ${getCategoryColor(project.category)}`}>
+          {project.category}
+        </span>
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <ExternalLink className="w-5 h-5 text-gray-400" />
+        </div>
+      </div>
+
+      <div className="relative z-10 flex flex-col flex-grow">
+        <h3 className="text-2xl font-semibold text-gray-900 mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
+          {project.title}
+        </h3>
+        
+        <p className="text-gray-600 mb-6 leading-relaxed flex-grow">
+          {project.description}
+        </p>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.technologies.map((tech, techIndex) => (
+            <span 
+              key={techIndex}
+              className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <Award className="w-4 h-4" />
+          <span>{project.impact}</span>
+        </div>
+      </div>
+
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 transition-all duration-300 pointer-events-none"></div>
+    </div>
+  );
+}
